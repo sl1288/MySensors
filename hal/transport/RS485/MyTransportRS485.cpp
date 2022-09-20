@@ -58,8 +58,8 @@
 
 #if defined(MY_RS485_DE_PIN)
 #if !defined(MY_RS485_DE_INVERSE)
-#define assertDE() hwDigitalWrite(MY_RS485_DE_PIN, HIGH); delayMicroseconds(5)
-#define deassertDE() hwDigitalWrite(MY_RS485_DE_PIN, LOW)
+#define assertDE() hwDigitalWrite(MY_RS485_DE_PIN, HIGH); digitalWrite(MY_RS485_RE_PIN, HIGH);  delayMicroseconds(5)
+#define deassertDE() hwDigitalWrite(MY_RS485_DE_PIN, LOW); digitalWrite(MY_RS485_RE_PIN, LOW)
 #else
 #define assertDE() hwDigitalWrite(MY_RS485_DE_PIN, LOW); delayMicroseconds(5)
 #define deassertDE() hwDigitalWrite(MY_RS485_DE_PIN, HIGH)
@@ -319,6 +319,7 @@ bool transportInit(void)
 	_nodeId = AUTO;
 #if defined(MY_RS485_DE_PIN)
 	hwPinMode(MY_RS485_DE_PIN, OUTPUT);
+	hwPinMode(MY_RS485_RE_PIN, OUTPUT);
 	deassertDE();
 #endif
 	return true;
